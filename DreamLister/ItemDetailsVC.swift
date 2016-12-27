@@ -65,7 +65,7 @@ class ItemDetailsVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSou
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        //update when selected
+        //update when selected and somthing
     }
     
     func getStores() {
@@ -76,7 +76,7 @@ class ItemDetailsVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSou
             self.stores = try context.fetch(fetchRequest)
             self.storePicker.reloadAllComponents()
         } catch {
-            //hendle the error
+            //hendle the error and something
         }
     }
     
