@@ -22,6 +22,7 @@ class ItemDetailsVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSou
     var stores = [Store]()
     var itemToEdit: Item?
     var imagePicker: UIImagePickerController!
+   
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,30 +36,24 @@ class ItemDetailsVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSou
         
         imagePicker = UIImagePickerController()
         imagePicker.delegate = self
-        
-        let store = Store(context: context)
-        store.name = "Best Buy"
-        let store2 = Store(context: context)
-        store2.name = "Tesla Dealership"
-        let store3 = Store(context: context)
-        store3.name = "Frys Electronics"
-        let store4 = Store(context: context)
-        store4.name = "Target"
-        let store5 = Store(context: context)
-        store5.name = "Amazon"
-        let store6 = Store(context: context)
-        store6.name = "K Market"
-        
-        ad.saveContext()
-        
+    
         getStores()
         
         if itemToEdit != nil {
             loadItemData()
         }
         
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(ItemDetailsVC.dismissKeyboard))
+        view.addGestureRecognizer(tap)
+        
     }
 
+    
+    func dismissKeyboard() {
+        
+        view.endEditing(true)
+    }
+    
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         let store = stores[row]
         return store.name
@@ -82,8 +77,32 @@ class ItemDetailsVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSou
         
         do {
             self.stores = try context.fetch(fetchRequest)
+            if stores.count < 1 {
+                print("Lets Add some more sores")
+                
+                let store = Store(context: context)
+                store.name = "Best Buy"
+                let store2 = Store(context: context)
+                store2.name = "Tesla Dealership"
+                let store3 = Store(context: context)
+                store3.name = "Frys Electronics"
+                let store4 = Store(context: context)
+                store4.name = "Target"
+                let store5 = Store(context: context)
+                store5.name = "Amazon"
+                let store6 = Store(context: context)
+                store6.name = "K Market"
+                
+                ad.saveContext()
+                getStores()
+                
+            } else {
+                
+            print("so no more")
             self.storePicker.reloadAllComponents()
+            }
         } catch {
+            
             //hendle the error and something
         }
     }

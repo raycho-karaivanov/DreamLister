@@ -19,7 +19,7 @@ class ItemCell: UITableViewCell {
     
     func configureCell(item: Item) {
         titleLbl.text = item.title
-        priceLbl.text = "€\(item.price)"
+        priceLbl.text = "€ \(item.price)"
         detailsLbl.text = item.details
         thumb.image = item.toImage?.image as? UIImage
     }
